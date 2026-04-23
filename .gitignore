@@ -1,0 +1,9 @@
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/ingest_progress.json
+backend/skin_model_weights.h5
+frontend/node_modules/
+frontend/dist/
+.env
+*.env

@@ -1,0 +1,17 @@
+fastapi==0.111.0
+uvicorn==0.29.0
+python-dotenv==1.0.1
+pinecone==5.4.2
+google-genai==1.10.0
+PyMuPDF==1.24.1
+sqlalchemy==2.0.30
+pymysql==1.1.1
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.9
+pillow==10.3.0
+tensorflow==2.16.1
+numpy==1.26.4
+scikit-learn==1.4.2
+requests==2.31.0
