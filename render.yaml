@@ -63,7 +63,7 @@ services:
         fromService:
           name: medical-app-backend
           type: web
-          property: url
+          property: host
     routes:
       - type: rewrite
         source: /*

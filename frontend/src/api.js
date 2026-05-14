@@ -1,7 +1,12 @@
 import axios from 'axios'
 
+// Render injects the backend host (e.g. medical-app-backend.onrender.com)
+// We need to prepend https:// if it's a bare host
+const rawApiUrl = import.meta.env.VITE_API_URL || ''
+const baseURL = rawApiUrl.startsWith('http') ? rawApiUrl : rawApiUrl ? `https://${rawApiUrl}` : ''
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || ''
+  baseURL
 })
 
 api.interceptors.request.use((config) => {
