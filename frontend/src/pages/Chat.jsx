@@ -12,7 +12,6 @@ export default function Chat() {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showContext, setShowContext] = useState(null)
   const bottomRef = useRef(null)
 
   useEffect(() => {
@@ -99,20 +98,7 @@ export default function Chat() {
                   msg.content
                 )}
               </div>
-              {msg.context && (
-                <button
-                  onClick={() => setShowContext(showContext === i ? null : i)}
-                  className="text-xs text-blue-500 hover:text-blue-700 underline"
-                >
-                  {showContext === i ? 'Hide' : 'View'} source context
-                </button>
-              )}
-              {showContext === i && msg.context && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-gray-600 max-w-2xl">
-                  <p className="font-semibold text-amber-700 mb-1">Source from Encyclopedia:</p>
-                  {msg.context}
-                </div>
-              )}
+
             </div>
           </div>
         ))}

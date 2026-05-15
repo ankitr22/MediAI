@@ -1,28 +1,47 @@
-#!/bin/bash
-echo "=== MediAI Setup ==="
+#!/usr/bin/env bash
+# =============================================================================
+# MediAI — Local Development Setup (Linux/Mac)
+# For EC2 deployment use deploy.sh instead.
+# =============================================================================
+set -euo pipefail
 
-echo ""
-echo "1. Setting up MySQL database..."
-mysql -u root -padmin1234 -e "CREATE DATABASE IF NOT EXISTS medical_app;" 2>/dev/null
-echo "   Database 'medical_app' ready."
+GREEN='\033[0;32m'; BLUE='\033[0;34m'; NC='\033[0m'
+info()    { echo -e "${BLUE}[INFO]${NC}  $*"; }
+success() { echo -e "${GREEN}[OK]${NC}    $*"; }
 
-echo ""
-echo "2. Installing Python dependencies..."
+echo "=== MediAI Local Setup ==="
+
+# ── Backend ───────────────────────────────────────────────────────
+info "Setting up Python virtual environment..."
 cd backend
-pip install -r requirements.txt
+python3 -m venv venv
+source venv/bin/activate
+
+info "Installing Python dependencies..."
+pip install --upgrade pip -q
+pip install -r requirements.txt -q
+success "Backend dependencies installed"
+
+cd ..
+
+# ── Frontend ──────────────────────────────────────────────────────
+info "Installing frontend dependencies..."
+cd frontend
+npm install --silent
+success "Frontend dependencies installed"
+cd ..
 
 echo ""
-echo "3. Running PDF ingestion into Pinecone (this may take 10-20 minutes)..."
-python ingest.py
-
+success "Setup complete!"
 echo ""
-echo "=== Backend ready. ==="
-echo "Run backend: cd backend && uvicorn main:app --reload --port 8000"
+echo "To start the backend:"
+echo "  cd backend && source venv/bin/activate && uvicorn main:app --reload --port 8000"
 echo ""
-echo "4. Installing frontend dependencies..."
-cd ../frontend
-npm install
-
+echo "To start the frontend:"
+echo "  cd frontend && npm run dev"
 echo ""
-echo "=== Frontend ready. ==="
-echo "Run frontend: cd frontend && npm run dev"
+echo "Or use Docker (recommended):"
+echo "  docker compose up -d --build"
+echo ""
+echo "To ingest a PDF into Pinecone:"
+echo "  cd backend && source venv/bin/activate && python ingest.py /path/to/medical.pdf"

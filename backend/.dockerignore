@@ -1,0 +1,18 @@
+# Never bake secrets into the image — docker-compose injects these at runtime
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ingest progress checkpoint
+ingest_progress.json
+
+# Model weights (large — mount as volume or download separately)
+skin_model_weights.h5
+
+# Git
+.git
+.gitignore

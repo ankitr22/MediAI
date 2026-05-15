@@ -59,7 +59,6 @@ export default function Layout() {
             </div>
             <div>
               <p className="text-sm font-medium">{username}</p>
-              <p className="text-blue-300 text-xs">Doctor</p>
             </div>
           </div>
           <button

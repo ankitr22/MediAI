@@ -3,10 +3,14 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+# VITE_API_URL is baked into the bundle at build time (Vite replaces import.meta.env)
+ARG VITE_API_URL=http://localhost:8000
+ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
-FROM node:20-alpine
-RUN npm install -g serve
-WORKDIR /app
-COPY --from=builder /app/dist ./dist
-CMD ["sh", "-c", "serve -s dist -l ${PORT:-3000}"]
+# Production stage — nginx serves the static bundle
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
